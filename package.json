@@ -1,0 +1,64 @@
+{
+    "name": "@cruciblehq/ui-web",
+    "version": "0.0.0",
+    "description": "Crucible UI renderer for the web.",
+    "private": false,
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "type": "module",
+    "sideEffects": false,
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js"
+        }
+    },
+    "files": [
+        "LICENSE",
+        "CHANGELOG.md",
+        "package.json",
+        "dist"
+    ],
+    "scripts": {
+        "build": "tsc",
+        "watch": "tsc --watch",
+        "clean": "rm -rf dist tsconfig.tsbuildinfo",
+        "lint": "eslint .",
+        "lint:fix": "eslint . --fix"
+    },
+    "dependencies": {
+        "react": "^18.2.0",
+        "react-reconciler": "^0.29.0",
+        "@cruciblehq/ui": "file:../bin/cruciblehq-ui-1.0.0-alpha.1.tgz"
+    },
+    "devDependencies": {
+        "@types/react": "^18.2.44",
+        "typescript": "^5.9.3"
+    },
+    "keywords": [
+        "crucible",
+        "crucible-ui",
+        "crucible-ui-web",
+        "ui",
+        "web",
+        "component",
+        "declarative",
+        "widget",
+        "jsx",
+        "react"
+    ],
+    "author": "Crucible Inc.",
+    "license": "UNLICENSED",
+    "homepage": "https://github.com/cruciblehq/crucible-ui",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/cruciblehq/crucible-ui",
+        "directory": "packages/crucible-ui"
+    },
+    "bugs": {
+        "url": "https://github.com/cruciblehq/crucible-ui/issues"
+    },
+    "publishConfig": {
+        "access": "public"
+    }
+}
