@@ -3,4 +3,4 @@
  * @module crucible-ui
  */
 
-export * from './core';
+export * from "./core";

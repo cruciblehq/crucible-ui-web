@@ -1,96 +1,66 @@
-import { HostContext } from './HostContext';
-import {
-    Component,
-    ComponentProps,
-    ComponentType,
-    Renderer,
-    View,
-    Content,
-    Input
-} from '@cruciblehq/ui';
+import type { CUDL } from '@cruciblehq/ui';
+import type { HostContainer } from './HostContainer';
+import type { HostContext } from './HostContext';
+import * as UI from '@cruciblehq/ui';
 
-export class WebRenderer implements Renderer<HTMLElement, HTMLElement, HostContext> {
+export class WebRenderer implements UI.Renderer<HostContainer, HostContext> {
 
-    getRootHostContext(_rootContainer: HTMLElement): HostContext {
-        console.log('getRootHostContext called');
-        return {};
+    getRootHostContext(_rootContainer: HostContainer): HostContext {
+        return {}
     }
 
-    getChildHostContext(_parentHostContext: HostContext, _type: ComponentType, _rootContainer: HTMLElement): HostContext {
-        console.log('getChildHostContext called');
-        return {};
+    getChildHostContext(_parentHostContext: HostContext, _type: UI.ComponentType, _rootContainer: HostContainer): HostContext {
+        return {}
     }
 
-    createInstance(component: Component, _rootContainer: HTMLElement, _hostContext: HostContext): HTMLElement {
-        console.log('createInstance called for component:', component);
+    createInstance(component: UI.Component, _rootContainer: HostContainer, _hostContext: HostContext): CUDL.Primitive {
+        console.warn("Creating instance for component:", component.constructor.name);
 
-        if (component instanceof View) {
-            return document.createElement('div');
+        if (component instanceof UI.View) {
+            return {} as CUDL.Primitive;  // Placeholder for a div or similar container
         }
 
-        else if (component instanceof Content) {
-            return document.createElement('span');
-        }
-
-        else if (component instanceof Input) {
-            return document.createElement('input');
+        else if (component instanceof UI.Text) {
+            return {} as CUDL.Primitive;  // Placeholder for a div or similar container
         }
 
         throw new Error(`Unsupported component type: ${component.constructor.name}`);
     }
 
-    appendInitialChild(parent: HTMLElement, child: HTMLElement): void {
-        console.log('appendInitialChild called');
-        parent.appendChild(child);
+    appendInitialChild(_parent: CUDL.Primitive, _child: CUDL.Primitive): void {
     }
 
-    finalizeInitialChildren(_instance: HTMLElement, _type: ComponentType, _props: ComponentProps, _rootContainer: HTMLElement, _hostContext: HostContext): boolean {
-        console.log('finalizeInitialChildren called');
+    finalizeInitialChildren(_instance: CUDL.Primitive, _type: UI.ComponentType, _props: UI.ComponentProps, _rootContainer: HostContainer, _hostContext: HostContext): boolean {
         return false;   // Don't call commitMount
     }
 
-    prepareForCommit(_containerInfo: HTMLElement): void {
+    prepareForCommit(_containerInfo: HostContainer): Record<string, unknown> | null {
+        return null;
+    }
+
+    resetAfterCommit(_containerInfo: HostContainer): void {
         // No-op
-        console.log('prepareForCommit called');
     }
 
-    resetAfterCommit(_containerInfo: HTMLElement): void {
+    commitMount(_instance: CUDL.Primitive, _type: UI.ComponentType, _props: UI.ComponentProps): void {
         // No-op
-        console.log('resetAfterCommit called');
     }
 
-    commitMount(_instance: HTMLElement, _type: ComponentType, _props: ComponentProps): void {
-        // No-op
-        console.log('commitMount called');
+    insertBefore(_parent: CUDL.Primitive, _child: CUDL.Primitive, _beforeChild: CUDL.Primitive): void {
     }
 
-    insertBefore(parent: HTMLElement, child: HTMLElement, beforeChild: HTMLElement): void {
-        parent.insertBefore(child, beforeChild);
-        console.log('insertBefore called');
+    removeChild(_parent: CUDL.Primitive, _child: CUDL.Primitive): void {
     }
 
-    removeChild(parent: HTMLElement, child: HTMLElement): void {
-        parent.removeChild(child);
-        console.log('removeChild called');
+    appendChildToContainer(_container: HostContainer, _child: CUDL.Primitive): void {
     }
 
-    appendChildToContainer(container: HTMLElement, child: HTMLElement): void {
-        container.appendChild(child);
-        console.log('appendChildToContainer called');
+    insertInContainerBefore(_container: HostContainer, _child: CUDL.Primitive, _beforeChild: CUDL.Primitive): void {
     }
 
-    insertInContainerBefore(container: HTMLElement, child: HTMLElement, beforeChild: HTMLElement): void {
-        container.insertBefore(child, beforeChild);
-        console.log('insertInContainerBefore called');
+    removeChildFromContainer(_container: HostContainer, _child: CUDL.Primitive): void {
     }
 
-    removeChildFromContainer(container: HTMLElement, child: HTMLElement): void {
-        container.removeChild(child);
-        console.log('removeChildFromContainer called');
-    }
-
-    clearContainer(container: HTMLElement): void {
-        container.innerHTML = '';
-        console.log('clearContainer called');
+    clearContainer(_container: HostContainer): void {
     }
 }

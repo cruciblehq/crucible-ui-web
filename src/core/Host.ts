@@ -1,7 +1,9 @@
 import ReactReconciler from 'react-reconciler';
-import { Reconciler } from '@cruciblehq/ui';
-import { WebRenderer } from "./WebRenderer";
-
+import { Reconciler, type Widget } from '@cruciblehq/ui';
+import type { WebRenderer } from "./WebRenderer";
+import type { HostContext } from './HostContext';
+import type { HostContainer } from './HostContainer';
+import { HostAPI } from './HostAPI';
 export type Manifest = {
     widgets: Array<{
         name: string;
@@ -14,8 +16,8 @@ export class Host {
     private readonly renderer: WebRenderer;
     private readonly manifest: Manifest;
 
-    private readonly reconciler: Reconciler<HTMLElement, HTMLElement, HTMLElement, any, WebRenderer>;
-    private reactReconciler: ReturnType<typeof ReactReconciler>;
+    private readonly reconciler: Reconciler<HostContainer, HostContext>;
+    private readonly reactReconciler: ReactReconciler.ReconcilerInstance;
     private root: ReturnType<typeof this.reactReconciler.createContainer>;
 
     constructor(renderer: WebRenderer, manifest: Manifest) {
@@ -23,29 +25,23 @@ export class Host {
         this.manifest = manifest;
 
         this.reconciler = new Reconciler(this.renderer);
+        this.reactReconciler = ReactReconciler(this.reconciler.hostConfig);
     }
 
-    public async render(container: HTMLElement) {
+    public async render(container: HTMLElement): Promise<void> {
 
         const widgetElements = await Promise.all(
             this.manifest.widgets.map(async (widget) => {
-                const module = await import(widget.path);
+                const module = await import(widget.path) as { default: Widget };
                 const Widget = module.default;
-                return Widget();
+                return Widget(new HostAPI());
             })
         );
 
-        this.reactReconciler = ReactReconciler(this.reconciler.hostConfig);
-        this.root = this.reactReconciler.createContainer(container, 0, false, '', null);
+        this.root = this.reactReconciler.createContainer(container, 0, false, '', null) as ReactReconciler.ReconcilerInstance;
 
-        console.log(this.reactReconciler);
-        console.log(this.root);
-        console.log(widgetElements);
-        console.log(container);
-
-        // Render only the first widget, we only have one
         this.reactReconciler.updateContainer(widgetElements[0], this.root, null, () => {
-            console.log('Did render widget');
+            console.warn('Did render widget');
         });
     }
 }

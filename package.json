@@ -3,36 +3,45 @@
     "version": "0.0.0",
     "description": "Crucible UI renderer for the web.",
     "private": false,
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts",
-    "type": "module",
     "sideEffects": false,
+    "type": "module",
     "exports": {
         ".": {
-            "types": "./dist/index.d.ts",
-            "import": "./dist/index.js"
+            "types": "./dist/types/index.d.ts",
+            "browser": "./dist/esm-browser.min/index.js",
+            "default": "./dist/esm-neutral/index.js"
         }
     },
     "files": [
+        "README.md",
         "LICENSE",
         "CHANGELOG.md",
         "package.json",
-        "dist"
+        "dist/esm-neutral"
     ],
     "scripts": {
-        "build": "tsc",
-        "watch": "tsc --watch",
-        "clean": "rm -rf dist tsconfig.tsbuildinfo",
-        "lint": "eslint .",
-        "lint:fix": "eslint . --fix"
+        "build": "npm run build:types && npm run build:esm-neutral && npm run build:esm-browser && npm run build:esm-browser.min",
+        "build:types": "tsc -p tsconfig.types.json",
+        "build:esm-neutral": "tsc -p tsconfig.esm-neutral.json",
+        "build:esm-browser": "node esbuild.config.esm-browser.js",
+        "build:esm-browser.min": "node esbuild.config.esm-browser.min.js",
+        "check": "npm run check:noemit && npm run check:lint",
+        "check:noemit": "tsc -p tsconfig.noemit.json",
+        "check:lint": "eslint .",
+        "check:lint-fix": "eslint . --fix",
+        "watch": "tsc -p tsconfig.noemit.json --watch",
+        "clean": "rm -rf dist tsconfig.tsbuildinfo"
     },
     "dependencies": {
+        "@cruciblehq/ui": "file:../bin/cruciblehq-ui-0.0.0.tgz",
         "react": "^18.2.0",
-        "react-reconciler": "^0.29.0",
-        "@cruciblehq/ui": "file:../bin/cruciblehq-ui-1.0.0-alpha.1.tgz"
+        "react-reconciler": "^0.29.0"
     },
     "devDependencies": {
         "@types/react": "^18.2.44",
+        "@typescript-eslint/eslint-plugin": "^8.46.3",
+        "esbuild": "^0.25.12",
+        "eslint": "^9.38.0",
         "typescript": "^5.9.3"
     },
     "keywords": [
@@ -49,14 +58,13 @@
     ],
     "author": "Crucible Inc.",
     "license": "UNLICENSED",
-    "homepage": "https://github.com/cruciblehq/crucible-ui",
+    "homepage": "https://github.com/cruciblehq/crucible-ui-web",
     "repository": {
         "type": "git",
-        "url": "https://github.com/cruciblehq/crucible-ui",
-        "directory": "packages/crucible-ui"
+        "url": "https://github.com/cruciblehq/crucible-ui-web"
     },
     "bugs": {
-        "url": "https://github.com/cruciblehq/crucible-ui/issues"
+        "url": "https://github.com/cruciblehq/crucible-ui-web/issues"
     },
     "publishConfig": {
         "access": "public"
