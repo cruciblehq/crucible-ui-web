@@ -26,10 +26,10 @@
         "build:esm-browser": "node esbuild.config.esm-browser.js",
         "build:esm-browser.min": "node esbuild.config.esm-browser.min.js",
         "check": "npm run check:noemit && npm run check:lint",
-        "check:noemit": "tsc -p tsconfig.noemit.json",
+        "check:noemit": "tsc -p tsconfig.json",
         "check:lint": "eslint .",
         "check:lint-fix": "eslint . --fix",
-        "watch": "tsc -p tsconfig.noemit.json --watch",
+        "watch": "tsc -p tsconfig.json --watch",
         "clean": "rm -rf dist tsconfig.tsbuildinfo"
     },
     "dependencies": {

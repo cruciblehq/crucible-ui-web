@@ -33,8 +33,7 @@
         "noUnusedParameters": true,
         "allowUnreachableCode": false,
         // Library type checks
-        "skipLibCheck": true, // Recommended true for speed
-        "skipDefaultLibCheck": true, // Matches skipLibCheck
+        "skipLibCheck": false,
         // Misc
         "allowJs": false
     },
