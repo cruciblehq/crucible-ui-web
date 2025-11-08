@@ -24,6 +24,14 @@ export class WebRenderer implements UI.Renderer<HostContainer, HostContext> {
             return {} as CUDL.Primitive;  // Placeholder for a div or similar container
         }
 
+        else if (component instanceof UI.Input) {
+            return {} as CUDL.Primitive;  // Placeholder for an input element
+        }
+
+        else if (component instanceof UI.Button) {
+            return {} as CUDL.Primitive;  // Placeholder for a button element
+        }
+
         throw new Error(`Unsupported component type: ${component.constructor.name}`);
     }
 

@@ -1,8 +1,10 @@
 import ReactReconciler from 'react-reconciler';
-import { Reconciler, createElement, type Widget } from '@cruciblehq/ui';
+import { Reconciler, type Widget } from '@cruciblehq/ui';
 import type { WebRenderer } from "./WebRenderer";
 import type { HostContext } from './HostContext';
 import type { HostContainer } from './HostContainer';
+import { HostAPI } from './HostAPI';
+
 export type Manifest = {
     widgets: Array<{
         name: string;
@@ -33,7 +35,7 @@ export class Host {
             this.manifest.widgets.map(async (widget) => {
                 const module = await import(widget.path) as { default: Widget };
                 const Widget = module.default;
-                return Widget;
+                return Widget(new HostAPI());
             })
         );
 
@@ -42,10 +44,7 @@ export class Host {
 
         this.root = this.reactReconciler.createContainer(container, 0, false, '', null) as ReactReconciler.ReconcilerInstance;
 
-        const element = createElement(widgetElements[0], { api: null });
-
-
-        this.reactReconciler.updateContainer(element, this.root, null, () => {
+        this.reactReconciler.updateContainer(widgetElements[0], this.root, null, () => {
             console.warn('Did render widget');
         });
     }
