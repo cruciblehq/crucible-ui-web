@@ -47,6 +47,7 @@ export class WebRenderer implements Renderer<HTMLElement, HTMLElement, HTMLEleme
     }
 
     appendInitialChild(_parent: HTMLElement, _child: HTMLElement): void {
+        // no-op
     }
 
     finalizeInitialChildren(_instance: HTMLElement, _type: ComponentType, _props: ComponentProps, _rootContainer: HTMLElement, _hostContext: WebContext): boolean {
@@ -66,20 +67,26 @@ export class WebRenderer implements Renderer<HTMLElement, HTMLElement, HTMLEleme
     }
 
     insertBefore(_parent: HTMLElement, _child: HTMLElement, _beforeChild: HTMLElement): void {
+        // no-op
     }
 
     removeChild(_parent: HTMLElement, _child: HTMLElement): void {
+        // no-op
     }
 
     appendChildToContainer(_container: HTMLElement, _child: HTMLElement): void {
+        // no-op
     }
 
     insertInContainerBefore(_container: HTMLElement, _child: HTMLElement, _beforeChild: HTMLElement): void {
+        // no-op
     }
 
     removeChildFromContainer(_container: HTMLElement, _child: HTMLElement): void {
+        // no-op
     }
 
     clearContainer(_container: HTMLElement): void {
+        // no-op
     }
 }
