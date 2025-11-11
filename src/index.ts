@@ -2,5 +2,4 @@
  * @packageDocumentation
  * @module crucible-ui
  */
-
-export * from "./core";
+export * from "./crucible-ui-web";

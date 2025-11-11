@@ -5,6 +5,8 @@
     "private": false,
     "sideEffects": false,
     "type": "module",
+    "main": "./dist/esm-neutral/index.js",
+    "module": "./dist/esm-neutral/index.js",
     "exports": {
         ".": {
             "types": "./dist/types/index.d.ts",
@@ -17,7 +19,8 @@
         "LICENSE",
         "CHANGELOG.md",
         "package.json",
-        "dist/esm-neutral"
+        "dist/esm-neutral",
+        "dist/types"
     ],
     "scripts": {
         "build": "npm run build:types && npm run build:esm-neutral && npm run build:esm-browser && npm run build:esm-browser.min",
@@ -32,13 +35,10 @@
         "watch": "tsc -p tsconfig.json --watch",
         "clean": "rm -rf dist tsconfig.tsbuildinfo"
     },
-    "dependencies": {
-        "@cruciblehq/ui": "file:../bin/cruciblehq-ui-0.0.0.tgz",
-        "react": "^18.2.0",
-        "react-reconciler": "^0.29.0"
+    "peerDependencies": {
+        "@cruciblehq/ui": "file:../bin/cruciblehq-ui-0.0.0.tgz"
     },
     "devDependencies": {
-        "@types/react": "^18.2.44",
         "@typescript-eslint/eslint-plugin": "^8.46.3",
         "esbuild": "^0.25.12",
         "eslint": "^9.38.0",

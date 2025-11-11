@@ -38,8 +38,7 @@
         "allowJs": false
     },
     "include": [
-        "src",
-        "types"
+        "src"
     ],
     "exclude": [
         "node_modules",
