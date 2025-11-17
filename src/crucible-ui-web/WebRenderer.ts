@@ -24,19 +24,23 @@ export class WebRenderer implements Renderer<HTMLElement, HTMLElement, HTMLEleme
         console.warn("Creating instance for component:", component.constructor.name, component.props);
 
         if (component instanceof View) {
-            return {} as HTMLElement;  // Placeholder for a div or similar container
+            const element = document.createElement('div');
+            return element;
         }
 
         else if (component instanceof Text) {
-            return {} as HTMLElement;  // Placeholder for a div or similar container
+            const element = document.createElement('span');
+            return element;
         }
 
         else if (component instanceof Input) {
-            return {} as HTMLElement;  // Placeholder for an input element
+            const element = document.createElement('input');
+            return element;
         }
 
         else if (component instanceof Button) {
-            return {} as HTMLElement;  // Placeholder for a button element
+            const element = document.createElement('button');
+            return element;
         }
 
         throw new Error(`Unsupported component type: ${component.constructor.name}`);
@@ -47,7 +51,8 @@ export class WebRenderer implements Renderer<HTMLElement, HTMLElement, HTMLEleme
     }
 
     appendInitialChild(_parent: HTMLElement, _child: HTMLElement): void {
-        // no-op
+        console.log("Appending child to parent");
+        _parent.appendChild(_child);
     }
 
     finalizeInitialChildren(_instance: HTMLElement, _type: ComponentType, _props: ComponentProps, _rootContainer: HTMLElement, _hostContext: WebContext): boolean {
@@ -75,11 +80,13 @@ export class WebRenderer implements Renderer<HTMLElement, HTMLElement, HTMLEleme
     }
 
     appendChildToContainer(_container: HTMLElement, _child: HTMLElement): void {
-        // no-op
+        console.log("Appending child to container");
+        _container.appendChild(_child);
     }
 
     insertInContainerBefore(_container: HTMLElement, _child: HTMLElement, _beforeChild: HTMLElement): void {
-        // no-op
+        console.log("Inserting child into container before another child");
+        _container.insertBefore(_child, _beforeChild);
     }
 
     removeChildFromContainer(_container: HTMLElement, _child: HTMLElement): void {
